@@ -1,5 +1,6 @@
 package de.gedoplan.showcase;
 
+import io.micrometer.observation.annotation.Observed;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -22,6 +23,7 @@ public class BookExportService {
     @Identifier("export")
     ExecutorService exportExecutor;
 
+    @Observed(name = "books.export", contextualName = "export-books")
     public CompletionStage<String> exportAll() {
         return CompletableFuture.supplyAsync(this::export, exportExecutor);
     }
