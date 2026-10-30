@@ -1,15 +1,15 @@
 package de.gedoplan.showcase;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import tools.jackson.databind.ObjectMapper;
-import io.quarkus.jackson.ObjectMapperCustomizer;
+import io.quarkus.jackson.JsonMapperBuilderCustomizer;
 import jakarta.inject.Singleton;
+import tools.jackson.databind.json.JsonMapper;
 
 @Singleton
-public class JacksonConfig implements ObjectMapperCustomizer {
+public class JacksonConfig implements JsonMapperBuilderCustomizer {
 
     @Override
-    public void customize(ObjectMapper objectMapper) {
-        objectMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+    public void customize(JsonMapper.Builder builder) {
+        builder.changeDefaultPropertyInclusion(inclusion -> inclusion.withValueInclusion(JsonInclude.Include.NON_NULL));
     }
 }

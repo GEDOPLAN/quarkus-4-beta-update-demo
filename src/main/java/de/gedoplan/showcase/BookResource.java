@@ -76,7 +76,7 @@ public class BookResource {
     @PATCH
     @Path("{id}")
     @Transactional
-    @Consumes("application/merge-patch+json")
+    @Consumes(MediaType.APPLICATION_MERGE_PATCH_JSON)
     public Book patch(@PathParam("id") long id, String mergePatch) {
         return objectMapper.readerForUpdating(get(id)).readValue(mergePatch);
     }

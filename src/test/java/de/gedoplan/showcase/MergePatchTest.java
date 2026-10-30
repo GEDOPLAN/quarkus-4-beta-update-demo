@@ -2,6 +2,7 @@ package de.gedoplan.showcase;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import jakarta.ws.rs.core.MediaType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -23,7 +24,7 @@ class MergePatchTest {
                 .extract().header("Location");
 
         given()
-                .contentType("application/merge-patch+json")
+                .contentType(MediaType.APPLICATION_MERGE_PATCH_JSON)
                 .body("""
                         {"pages": 480}
                         """)

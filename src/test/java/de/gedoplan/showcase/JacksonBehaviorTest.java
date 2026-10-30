@@ -5,16 +5,16 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
 
 /**
- * Pins down Jackson's lenient deserialization defaults, which change with Jackson 3.
+ * Pins down Jackson 3's stricter deserialization defaults. The Jackson 2 behavior can be restored with
+ * {@code quarkus.jackson.fail-on-trailing-tokens=false} and {@code quarkus.jackson.fail-on-null-for-primitives=false}.
  */
 @QuarkusTest
 class JacksonBehaviorTest {
 
     @Test
-    void trailingTokensAreIgnored() {
+    void trailingTokensAreRejected() {
         given()
                 .contentType(ContentType.JSON)
                 .body("""
@@ -22,12 +22,11 @@ class JacksonBehaviorTest {
                         """)
                 .when().post("/books")
                 .then()
-                .statusCode(201)
-                .body("title", is("Trailing"));
+                .statusCode(400);
     }
 
     @Test
-    void nullForPrimitiveBecomesZero() {
+    void nullForPrimitiveIsRejected() {
         given()
                 .contentType(ContentType.JSON)
                 .body("""
@@ -35,7 +34,6 @@ class JacksonBehaviorTest {
                         """)
                 .when().post("/books")
                 .then()
-                .statusCode(201)
-                .body("pages", is(0));
+                .statusCode(400);
     }
 }

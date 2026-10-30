@@ -2,13 +2,13 @@ package de.gedoplan.showcase;
 
 import io.quarkus.logging.Log;
 import io.quarkus.narayana.jta.QuarkusTransaction;
-import io.quarkus.runtime.Startup;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Eager;
 
 import java.time.LocalDate;
 
-@Startup
+@Eager
 @ApplicationScoped
 public class CatalogSeeder {
 

@@ -1,11 +1,10 @@
 package de.gedoplan.showcase;
 
-import tools.jackson.databind.ObjectMapper;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -35,10 +34,7 @@ public class BookExportService {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        try {
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(books);
-        } catch (JacksonException e) {
-            throw new IllegalStateException("Export failed", e);
-        }
+        // Jackson 3 exceptions are unchecked, no try/catch needed anymore
+        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(books);
     }
 }
