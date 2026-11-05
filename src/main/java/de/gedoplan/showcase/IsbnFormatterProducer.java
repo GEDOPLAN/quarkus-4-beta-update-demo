@@ -1,8 +1,9 @@
 package de.gedoplan.showcase;
 
-import io.quarkus.arc.DefaultBean;
+import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Reserve;
 
 /**
  * Provides a fallback {@link IsbnFormatter} which backs off as soon as the application
@@ -12,8 +13,9 @@ import jakarta.enterprise.inject.Produces;
 public class IsbnFormatterProducer {
 
     @Produces
-    @DefaultBean
+    @Reserve
     @ApplicationScoped
+    @Priority(0)
     IsbnFormatter plainIsbnFormatter() {
         return isbn -> "ISBN " + isbn;
     }

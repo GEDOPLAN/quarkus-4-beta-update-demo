@@ -1,11 +1,11 @@
 package de.gedoplan.showcase;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import tools.jackson.core.JacksonException;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -37,7 +37,7 @@ public class BookExportService {
         }
         try {
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(books);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new IllegalStateException("Export failed", e);
         }
     }

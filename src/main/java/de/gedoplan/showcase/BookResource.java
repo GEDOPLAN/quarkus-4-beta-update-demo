@@ -1,7 +1,6 @@
 package de.gedoplan.showcase;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -78,7 +77,7 @@ public class BookResource {
     @Path("{id}")
     @Transactional
     @Consumes("application/merge-patch+json")
-    public Book patch(@PathParam("id") long id, String mergePatch) throws JsonProcessingException {
+    public Book patch(@PathParam("id") long id, String mergePatch) {
         return objectMapper.readerForUpdating(get(id)).readValue(mergePatch);
     }
 
